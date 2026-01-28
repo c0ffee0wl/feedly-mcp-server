@@ -93,6 +93,8 @@ class FeedlyClient:
         unread_only: bool = True,
         continuation: Optional[str] = None,
         ranked: str = "newest",
+        newer_than: Optional[int] = None,
+        older_than: Optional[int] = None,
     ) -> dict:
         """Fetch articles from a stream (feed, category, or tag).
 
@@ -102,6 +104,8 @@ class FeedlyClient:
             unread_only: Only return unread articles
             continuation: Pagination token
             ranked: Sort order ('newest' or 'oldest')
+            newer_than: Only return articles newer than this timestamp (epoch ms)
+            older_than: Only return articles older than this timestamp (epoch ms)
 
         Returns:
             Dict with 'items' list and optional 'continuation' token
@@ -115,6 +119,10 @@ class FeedlyClient:
             params["unreadOnly"] = "true"
         if continuation:
             params["continuation"] = continuation
+        if newer_than is not None:
+            params["newerThan"] = newer_than
+        if older_than is not None:
+            params["olderThan"] = older_than
 
         return await self._request("GET", "/streams/contents", params=params)
 

@@ -40,6 +40,14 @@ class GetStreamContentsInput(BaseModel):
         default="newest",
         description="Sort order: 'newest' or 'oldest'",
     )
+    newer_than: Optional[int] = Field(
+        default=None,
+        description="Only return articles newer than this timestamp (epoch ms). Max 31 days in the past.",
+    )
+    older_than: Optional[int] = Field(
+        default=None,
+        description="Only return articles older than this timestamp (epoch ms)",
+    )
     response_format: ResponseFormat = Field(
         default=ResponseFormat.MARKDOWN,
         description="Output format: 'markdown' for human-readable or 'json' for machine-readable",

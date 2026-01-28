@@ -453,7 +453,7 @@ async def feedly_get_stream_contents(params: GetStreamContentsInput) -> str:
     """Fetch articles from a Feedly stream (feed, category, or tag).
 
     Use this tool to retrieve articles for reading and summarization.
-    Supports pagination via continuation token.
+    Supports pagination via continuation token and time-based filtering.
 
     Args:
         params (GetStreamContentsInput): Validated input containing:
@@ -462,6 +462,8 @@ async def feedly_get_stream_contents(params: GetStreamContentsInput) -> str:
             - unread_only (bool): Only unread articles (default: True)
             - continuation (str): Pagination token
             - ranked (str): Sort order 'newest' or 'oldest'
+            - newer_than (int): Only articles newer than timestamp (epoch ms, max 31 days)
+            - older_than (int): Only articles older than timestamp (epoch ms)
             - response_format (str): 'markdown' or 'json'
 
     Returns:
@@ -472,6 +474,7 @@ async def feedly_get_stream_contents(params: GetStreamContentsInput) -> str:
         - Get unread from feed: stream_id="feed/https://example.com/rss"
         - Get all articles: stream_id="user/{id}/category/global.all"
         - Get saved articles: stream_id="user/{id}/tag/global.saved"
+        - Get articles from last 7 days: newer_than=1704067200000
     """
     try:
         client = get_client()
@@ -481,6 +484,8 @@ async def feedly_get_stream_contents(params: GetStreamContentsInput) -> str:
             unread_only=params.unread_only,
             continuation=params.continuation,
             ranked=params.ranked,
+            newer_than=params.newer_than,
+            older_than=params.older_than,
         )
         return _truncate_response(_format_stream_contents(data, params.response_format))
     except Exception as e:
