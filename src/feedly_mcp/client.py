@@ -61,7 +61,8 @@ class FeedlyClient:
 
             response.raise_for_status()
 
-            if response.status_code == 204:
+            # Handle empty responses (204 No Content or empty body with 200)
+            if response.status_code == 204 or not response.content:
                 return None
             return response.json()
 
