@@ -17,7 +17,6 @@ An MCP (Model Context Protocol) server that enables Claude to interact with Feed
 
 - Python 3.10 or higher
 - A Feedly account with API access
-- Feedly API access token from https://feedly.com/i/team/api
 
 ### Install with uv
 
@@ -154,4 +153,4 @@ The server returns actionable error messages:
 
 ## License
 
-MIT License
+GPL-3.0 License
