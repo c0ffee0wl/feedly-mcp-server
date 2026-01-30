@@ -49,7 +49,7 @@ def _truncate_response(content: str) -> str:
     """Truncate response to character limit."""
     if len(content) <= CHARACTER_LIMIT:
         return content
-    return content[: CHARACTER_LIMIT - 50] + "\n\n... [Response truncated at 25000 characters]"
+    return content[: CHARACTER_LIMIT - 50] + f"\n\n... [Response truncated at {CHARACTER_LIMIT} characters]"
 
 
 def _format_timestamp(timestamp_ms: int | None) -> str:
